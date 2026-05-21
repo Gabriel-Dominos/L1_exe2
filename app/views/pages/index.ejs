@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista 1 Exercício 2</title>
+</head>
+<body>
+
+    <form action="/classificar" method="post">
+
+        <label for="dia">Digite o dia da semana:</label> <br>
+        <input type="text" name="dia" id="dia" value="<%= valores.idade %>"> <br>
+        <button type="submit">Classificar</button>
+
+    </form>
+    <%
+
+        if(retorno){
+            %>
+            <h2>dia da semana: <%= retorno.semana %></h2>
+            <%
+        }else{
+            %>
+            <h2>Não temos retorno</h2>
+            <%
+        }
+
+
+    %>
+
+</body>
+</html>
