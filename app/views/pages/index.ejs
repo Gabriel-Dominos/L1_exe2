@@ -1,66 +1,79 @@
-const express = require("express");
-const router = express.Router();
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista 1 - Exercício 2</title>
 
-router.get("/", (req, res) => {
-    res.render("pages/index", {
-        retorno: null,
-        valores: {
-            dia: ""
-        },
-        erros: {}
-    });
-});
+    <style>
+        .erro-input {
+            border: 2px solid red;
+            background-color: #ffe6e6;
+        }
 
-router.post("/classificar", (req, res) => {
+        .mensagem-erro {
+            color: red;
+            font-size: 14px;
+        }
 
-    // recuperar o dia
-    let dia = parseInt(req.body.dia);
+        .resultado {
+            color: green;
+        }
+    </style>
+</head>
+<body>
 
-    // validação
-    if (isNaN(dia) || dia < 1 || dia > 7) {
+    <h1>Classificar Dia da Semana</h1>
 
-        return res.render("pages/index", {
-            retorno: {
-                erro: "Digite um número entre 1 e 7."
-            },
-            valores: {
-                dia: req.body.dia
-            },
-            erros: {
-                dia: true
-            }
-        });
-    }
+    <form action="/classificar" method="post">
 
-    // classificação
-    let semana = "";
+        <label for="dia">Digite um número de 1 a 7:</label>
+        <br>
 
-    if (dia == 1) {
-        semana = "Domingo";
-    } else if (dia == 2) {
-        semana = "Segunda-feira";
-    } else if (dia == 3) {
-        semana = "Terça-feira";
-    } else if (dia == 4) {
-        semana = "Quarta-feira";
-    } else if (dia == 5) {
-        semana = "Quinta-feira";
-    } else if (dia == 6) {
-        semana = "Sexta-feira";
-    } else {
-        semana = "Sábado";
-    }
+        <input
+            type="number"
+            name="dia"
+            id="dia"
+            value="<%= valores.dia %>"
+            class="<%= erros.dia ? 'erro-input' : '' %>"
+        >
 
-    res.render("pages/index", {
-        retorno: {
-            semana: semana
-        },
-        valores: {
-            dia: req.body.dia
-        },
-        erros: {}
-    });
+        <br>
 
-});
+        <% if (erros.dia) { %>
+            <span class="mensagem-erro">
+                Digite um valor válido entre 1 e 7.
+            </span>
+            <br>
+        <% } %>
 
-module.exports = router;
+        <br>
+
+        <button type="submit">
+            Classificar
+        </button>
+
+    </form>
+
+    <hr>
+
+    <% if (retorno) { %>
+
+        <% if (retorno.erro) { %>
+
+            <h2 style="color:red;">
+                <%= retorno.erro %>
+            </h2>
+
+        <% } else { %>
+
+            <h2 class="resultado">
+                Dia da semana: <%= retorno.semana %>
+            </h2>
+
+        <% } %>
+
+    <% } %>
+
+</body>
+</html>
